@@ -10,7 +10,7 @@ Java Annotations and Annotation Processer for ensure override methods.
 |@Clone| if this annotation is added to a class, clone method should be overrided in the class and sub classes.|
 |@MustOverride| if this annotation is added to a method, the method should be overrided in sub classes.|
 |@SuppressCloneWarning| if this annotation is added to a class, the processer will skip the process of @Clone annotation check.|
-|@SuppressOverrideWarning| if this annotation is added to a class, the processer will skip the process of @ForcedOverride annotation check.|
+|@SuppressOverrideWarning| if this annotation is added to a class, the processer will skip the process of @MustOverride annotation check.|
 
 ##Processer Option
 
