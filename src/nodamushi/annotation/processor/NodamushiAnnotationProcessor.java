@@ -28,7 +28,7 @@ import javax.lang.model.util.Elements;
 import javax.tools.Diagnostic.Kind;
 
 import nodamushi.annotation.Clone;
-import nodamushi.annotation.ForcedOverride;
+import nodamushi.annotation.MustOverride;
 import nodamushi.annotation.SuppressCloneWarning;
 import nodamushi.annotation.SuppressOverrideWarning;
 /**
@@ -161,7 +161,7 @@ public class NodamushiAnnotationProcessor extends AbstractProcessor{
 
 
 
-    private static List<ExecutableElement> findAnotationMethod(TypeElement e,
+    private List<ExecutableElement> findAnotationMethod(TypeElement e,
         final Class<? extends Annotation> c,final List<String> ignore){
       final List<ExecutableElement> list = new ArrayList<ExecutableElement>();
       final ForcedOverrideMethodScan s = new ForcedOverrideMethodScan();
@@ -180,7 +180,16 @@ public class NodamushiAnnotationProcessor extends AbstractProcessor{
           for(final Element ee:e.getEnclosedElements()){
             final ExecutableElement scane = s.scan(ee);
             if(scane!=null && !ignore.contains(ee.getSimpleName().toString())){
-              list.add(scane);
+              boolean overrided = false;
+              for(final ExecutableElement l:list){
+                if(elements.overrides(l, scane, (TypeElement)l.getEnclosingElement())){
+                  overrided = true;
+                  break;
+                }
+              }
+              if(!overrided){
+                list.add(scane);
+              }
             }
           }
           final TypeMirror sp = e.getSuperclass();
@@ -200,7 +209,7 @@ public class NodamushiAnnotationProcessor extends AbstractProcessor{
       final SuppressOverrideWarning so = e.getAnnotation(SuppressOverrideWarning.class);
       final List<String> ignoreNames = so == null?Collections.EMPTY_LIST:
         Arrays.asList(so.value());
-      final List<ExecutableElement> l =findAnotationMethod(e, ForcedOverride.class,ignoreNames);
+      final List<ExecutableElement> l =findAnotationMethod(e, MustOverride.class,ignoreNames);
       if(l.isEmpty()) {
         return;
       }
@@ -212,7 +221,9 @@ public class NodamushiAnnotationProcessor extends AbstractProcessor{
 
       if(!l.isEmpty()){
         for(final ExecutableElement ee:l){
-          m.printMessage(level, "'"+ee.getSimpleName()+"' isn't overrided.", e);
+          if(ee.getAnnotation(MustOverride.class).value()){
+            m.printMessage(level, "'"+ee.getSimpleName()+"' isn't overrided.", e);
+          }
         }
       }
     }
@@ -249,7 +260,7 @@ public class NodamushiAnnotationProcessor extends AbstractProcessor{
   private static class ForcedOverrideMethodScan extends ElementScanner6<ExecutableElement, Void>{
     @Override
     public ExecutableElement visitExecutable(final ExecutableElement e ,final Void p){
-      if(e.getAnnotation(ForcedOverride.class)!=null){
+      if(e.getAnnotation(MustOverride.class)!=null){
         for(final Modifier m:e.getModifiers()){
           switch(m){
             case FINAL:

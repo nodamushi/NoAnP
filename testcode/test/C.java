@@ -1,7 +1,7 @@
 package test;
 
 import nodamushi.annotation.Clone;
-import nodamushi.annotation.ForcedOverride;
+import nodamushi.annotation.MustOverride;
 /**
  *
  * abstractクラスではCloneなどは無視されます
@@ -12,7 +12,7 @@ import nodamushi.annotation.ForcedOverride;
 
 @Clone
 public abstract class C{
-  @ForcedOverride
+  @MustOverride
   public String abc(final Integer i){
     return i.toString();
   }

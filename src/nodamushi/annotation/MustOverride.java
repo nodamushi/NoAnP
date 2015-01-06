@@ -12,4 +12,10 @@ import java.lang.annotation.Target;
  */
 @Target(ElementType.METHOD)
 @Retention(RetentionPolicy.CLASS)
-public @interface ForcedOverride{}
+public @interface MustOverride{
+  /**
+   * 有効性を示す。
+   * @return falseを返すとき、小クラスでオーバーライドを強制しない
+   */
+  boolean value() default true;
+}

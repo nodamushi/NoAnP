@@ -1,7 +1,7 @@
 package test;
 
 import nodamushi.annotation.Clone;
-import nodamushi.annotation.ForcedOverride;
+import nodamushi.annotation.MustOverride;
 
 /**
  * Cloneはクラスに、ForcedOverrideはメソッドに付加します
@@ -11,7 +11,7 @@ import nodamushi.annotation.ForcedOverride;
 @Clone
 public class A{
 
-  @ForcedOverride
+  @MustOverride
   public void a(final Integer i){
 
   }
