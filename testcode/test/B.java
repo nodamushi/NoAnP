@@ -31,12 +31,12 @@ class BB extends B{
     super.a(i);
   }
   @MustOverride
-  public static void bb(final String str){}
+  public static Number bb(final String str){return null;}
 
 }
 //@MustOverride(false)が指定されると、
 //それ以降のサブクラスは実装を強制されない
 @SuppressCloneWarning
 class BBB extends BB{
-  public static void bb(final String str){}
+  public static Integer bb(final String str){return null;}
 }

@@ -137,7 +137,8 @@ class AnnotationScan extends ElementScanner6<Void, Void>{
         if(!types.isSubsignature(t1, t2)) {
           return false;
         }
-        return types.isSubtype(t1.getReturnType(), t2.getReturnType());
+//        return types.isSubtype(t1.getReturnType(), t2.getReturnType());
+        return true;
 
       }
     }
