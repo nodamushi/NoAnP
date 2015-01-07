@@ -10,9 +10,7 @@ import nodamushi.annotation.SuppressCloneWarning;
  */
 public class B extends A{
   public static void test(){
-
   }
-
   @Override
   @MustOverride//同じメソッド名に再びMustOverrideを付けても良い
   public void a(final Integer i){
@@ -25,7 +23,6 @@ public class B extends A{
 
 }
 
-
 @SuppressCloneWarning
 class BB extends B{
   @Override
@@ -33,10 +30,13 @@ class BB extends B{
   public void a(final Integer i){
     super.a(i);
   }
+  @MustOverride
+  public static void bb(final String str){}
 
 }
 //@MustOverride(false)が指定されると、
 //それ以降のサブクラスは実装を強制されない
 @SuppressCloneWarning
 class BBB extends BB{
+  public static void bb(final String str){}
 }

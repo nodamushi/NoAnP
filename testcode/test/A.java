@@ -23,6 +23,18 @@ public class A{
   }
 
   class AA extends A{
+
+    @Override
+    public void a(final Integer i){
+      // TODO 自動生成されたメソッド・スタブ
+      super.a(i);
+    }
+
+    @Override
+    protected Object clone(){
+      // TODO 自動生成されたメソッド・スタブ
+      return super.clone();
+    }
   }
 
 }
