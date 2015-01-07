@@ -109,17 +109,21 @@ public class NodamushiAnnotationProcessor extends AbstractProcessor{
 
     @Override
     public Void visitType(final TypeElement e ,final Void p){
+      check(e);
+      return super.visitType(e, p);
+    }
+
+    public void check(final TypeElement e ){
       if(isClass(e)){
         if(isAbstractClass(e)){
-          return null;
+          return;
         }
         checkClone(e);
         checkForcedMethod(e);
-        return null;
+        return;
       }
-
-      return super.visitType(e, p);
     }
+
 
     //クラスをさかのぼってCloneが付加されているか調べる
     private static boolean findAnotation(TypeElement e,
