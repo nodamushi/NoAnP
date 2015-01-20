@@ -127,7 +127,6 @@ class AnnotationScan extends ElementScanner6<Void, Void>{
     }
     if(e1.getSimpleName().equals(e2.getSimpleName())&&
         isStatic(e1) && isStatic(e2)){
-      m.printMessage(Kind.ERROR, ""+e1.getSimpleName()+"   ==   "+e2.getSimpleName());
       if((e1.asType() instanceof ExecutableType)&&
           (e2.asType() instanceof ExecutableType)){
         final ExecutableType
